@@ -82,7 +82,7 @@ export default function AnswerCard({ result, fullText, loading, error, onAnimati
 
   if (error) {
     return (
-      <div role="alert" className="rounded-2xl border border-red-800 bg-red-950 px-7 py-5 text-sm text-red-300">
+      <div role="alert" className="rounded-2xl border border-red-800 bg-red-950 px-5 sm:px-7 py-5 text-sm text-red-300">
         {error}
       </div>
     )
@@ -90,7 +90,7 @@ export default function AnswerCard({ result, fullText, loading, error, onAnimati
 
   if (loading && !fullText) {
     return (
-      <div aria-live="polite" aria-label="Analysing" className="rounded-2xl border border-emerald-700/60 bg-[#162b1f] shadow-[0_2px_24px_rgba(0,0,0,0.5)] px-7 py-8 flex items-center gap-3">
+      <div aria-live="polite" aria-label="Analysing" className="rounded-2xl border border-emerald-700/60 bg-[#162b1f] shadow-[0_2px_24px_rgba(0,0,0,0.5)] px-5 sm:px-7 py-8 flex items-center gap-3">
         <span aria-hidden="true" className="text-2xl motion-safe:animate-bounce" style={{ animationDuration: '0.8s' }}>⚽</span>
         <span className="text-gray-400 text-sm">Analysing...</span>
       </div>
@@ -99,7 +99,7 @@ export default function AnswerCard({ result, fullText, loading, error, onAnimati
 
   if (isAnimating || (loading && fullText)) {
     return (
-      <div aria-live="polite" className="rounded-2xl border border-emerald-700/60 bg-[#162b1f] shadow-[0_2px_24px_rgba(0,0,0,0.5)] px-7 py-6">
+      <div aria-live="polite" className="rounded-2xl border border-emerald-700/60 bg-[#162b1f] shadow-[0_2px_24px_rgba(0,0,0,0.5)] px-5 sm:px-7 py-6">
         <p className="text-white leading-relaxed whitespace-pre-wrap">
           {displayedText}
           <span aria-hidden="true" className="motion-safe:animate-bounce inline-block" style={{ animationDuration: '0.8s' }}> ⚽</span>
@@ -112,10 +112,10 @@ export default function AnswerCard({ result, fullText, loading, error, onAnimati
 
   return (
     <div aria-live="polite" className="rounded-2xl border border-emerald-700/60 bg-[#162b1f] shadow-[0_2px_24px_rgba(0,0,0,0.5)] overflow-hidden">
-      <div className="px-7 py-5">
+      <div className="px-5 sm:px-7 py-5">
         <p className="text-white leading-relaxed whitespace-pre-wrap">{result.answer}</p>
       </div>
-      <div className="px-7 pb-5 flex flex-col gap-3">
+      <div className="px-5 sm:px-7 pb-5 flex flex-col gap-3">
         <ConfidenceSlider score={result.confidence} />
         {result.caveat && (
           <p className="text-xs text-amber-400 leading-relaxed border-l-2 border-amber-600 pl-3">

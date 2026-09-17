@@ -8,6 +8,14 @@ interface Props {
   mode?: 'football' | 'fpl'
 }
 
+// Autofocus only on desktop — on phones it opens the keyboard over the page on load
+const IS_DESKTOP = typeof window !== 'undefined' && window.matchMedia('(min-width: 640px)').matches
+
+const PLACEHOLDERS = {
+  football: { desktop: 'e.g. Who has been clinical up front recently?', mobile: 'e.g. Top scorers?' },
+  fpl: { desktop: 'e.g. Who should I captain this week?', mobile: 'e.g. Best captain?' },
+}
+
 export default function InputBar({ onAsk, onNewConversation, loading, hasContent, mode = 'football' }: Props) {
   const [input, setInput] = useState('')
 
@@ -20,7 +28,7 @@ export default function InputBar({ onAsk, onNewConversation, loading, hasContent
   }
 
   return (
-    <form onSubmit={handleSubmit} className="flex gap-3">
+    <form onSubmit={handleSubmit} className="flex gap-2 sm:gap-3">
       <label htmlFor="question-input" className="sr-only">
         Ask a question
       </label>
@@ -43,18 +51,21 @@ export default function InputBar({ onAsk, onNewConversation, loading, hasContent
         type="text"
         value={input}
         onChange={(e) => setInput(e.target.value)}
-        placeholder={mode === 'fpl' ? 'e.g. Who should I captain this week?' : 'e.g. Who has been clinical up front recently?'}
-        autoFocus
+        placeholder={PLACEHOLDERS[mode][IS_DESKTOP ? 'desktop' : 'mobile']}
+        autoFocus={IS_DESKTOP}
         disabled={loading}
-        className="flex-1 bg-[#162b1f] border border-emerald-700/60 rounded-xl px-5 py-3.5 text-sm text-white placeholder-gray-500 focus:outline-none focus:border-emerald-400 transition-colors shadow-[0_2px_24px_rgba(0,0,0,0.5)] disabled:opacity-50 disabled:cursor-not-allowed"
+        className="flex-1 min-w-0 bg-[#162b1f] border border-emerald-700/60 rounded-xl px-4 sm:px-5 py-3.5 text-base sm:text-sm text-white placeholder-gray-500 focus:outline-none focus:border-emerald-400 transition-colors shadow-[0_2px_24px_rgba(0,0,0,0.5)] disabled:opacity-50 disabled:cursor-not-allowed"
       />
       <button
         type="submit"
         disabled={!input.trim() || loading}
         aria-label="Submit question"
-        className="bg-emerald-500 hover:bg-emerald-400 disabled:opacity-30 disabled:cursor-not-allowed text-zinc-950 text-sm font-bold px-6 py-3.5 rounded-xl transition-colors whitespace-nowrap"
+        className="shrink-0 bg-emerald-500 hover:bg-emerald-400 disabled:opacity-30 disabled:cursor-not-allowed text-zinc-950 text-sm font-bold px-4 sm:px-6 py-3.5 rounded-xl transition-colors whitespace-nowrap"
       >
-        Kick Off
+        <span className="hidden sm:inline">Kick Off</span>
+        <svg className="sm:hidden" width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+          <path d="M2 8h11M9 4l4 4-4 4" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"/>
+        </svg>
       </button>
     </form>
   )

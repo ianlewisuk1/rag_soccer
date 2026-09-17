@@ -11,9 +11,18 @@ export default function StandingsTable({ onTeamClick, disabled = false }: Props)
   const { standings, loading, error } = useStandings()
 
   return (
+    <>
+      {/* On mobile the expanded panel floats over the page instead of squeezing it */}
+      {!collapsed && (
+        <div
+          className="fixed inset-0 z-30 bg-black/60 touch-none sm:hidden"
+          onClick={() => setCollapsed(true)}
+          aria-hidden="true"
+        />
+      )}
     <aside
       aria-label="Premier League table"
-      className={`${collapsed ? 'w-10' : 'w-72'} shrink-0 bg-[#040d07] border-l border-emerald-800 flex flex-col h-full transition-[width] duration-300 overflow-hidden`}
+      className={`${collapsed ? 'w-8 sm:w-10' : 'w-72 max-sm:fixed max-sm:inset-y-0 max-sm:right-0 max-sm:z-40'} shrink-0 bg-[#040d07] border-l border-emerald-800 flex flex-col h-full transition-[width] duration-300 overflow-hidden`}
     >
       {collapsed ? (
         <div className="flex flex-col items-center h-full py-4 gap-4">
@@ -48,6 +57,7 @@ export default function StandingsTable({ onTeamClick, disabled = false }: Props)
             </button>
           </div>
 
+          <div className="flex-1 overflow-y-auto">
           {loading && <p className="text-xs text-gray-500 px-4 pt-4">Loading...</p>}
           {error && <p className="text-xs text-red-500 px-4 pt-4">Could not load table</p>}
 
@@ -89,8 +99,10 @@ export default function StandingsTable({ onTeamClick, disabled = false }: Props)
               </tbody>
             </table>
           )}
+          </div>
         </>
       )}
     </aside>
+    </>
   )
 }

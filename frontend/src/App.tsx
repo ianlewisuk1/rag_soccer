@@ -136,7 +136,7 @@ function App() {
   const hasContent = activeHistory.length > 0 || loading || !!fullText || !!error
 
   return (
-    <div className="flex h-screen overflow-hidden pitch-bg text-white">
+    <div className="flex h-dvh overflow-hidden pitch-bg text-white">
 
       <HistorySidebar
         history={history}
@@ -145,11 +145,11 @@ function App() {
         onSelect={handleSelectConversation}
       />
 
-      <main className="flex-1 flex flex-col">
-        <header className="mt-10 mb-30 text-center px-4 shrink-0">
+      <main className="flex-1 min-w-0 flex flex-col">
+        <header className="mt-6 mb-10 sm:mt-10 sm:mb-30 text-center px-4 shrink-0">
           <div className="flex flex-col items-center mb-3">
             <button onClick={handleNewConversation} aria-label="New conversation">
-              <img src="/logos/dugout-green.png" alt="The Dugout" className="w-40 h-auto object-contain hover:opacity-80 transition-opacity" />
+              <img src="/logos/dugout-green.png" alt="The Dugout" className="w-32 sm:w-40 h-auto object-contain hover:opacity-80 transition-opacity" />
             </button>
             <p className="text-gray-500 text-sm mt-1">Tactics, form, stats and maybe fantasy — powered by Guardian articles</p>
           </div>
@@ -185,9 +185,9 @@ function App() {
         </header>
 
         {/* Scrollable conversation area */}
-        <div className="flex-1 flex flex-col items-center px-4 py-2 min-h-0">
+        <div className="flex-1 flex flex-col items-center px-4 py-2 min-h-0 overflow-y-auto">
           {hasContent && (
-            <div ref={scrollAreaRef} className="w-full max-w-2xl mb-4 flex flex-col gap-4 overflow-y-auto">
+            <div ref={scrollAreaRef} className="w-full max-w-2xl mb-4 flex flex-col gap-4">
             {activeHistory.map((entry, i) => (
               <div key={i} className="flex flex-col gap-4">
                 <div className="flex justify-end">
@@ -224,7 +224,7 @@ function App() {
           )}
 
           {!hasContent && (
-            <div className="w-full max-w-2xl">
+            <div className="w-full max-w-2xl pb-[max(2rem,env(safe-area-inset-bottom))]">
               <div className="mb-8">
                 <InputBar onAsk={handleAsk} onNewConversation={handleNewConversation} loading={responding} hasContent={hasContent} mode={mode} />
               </div>
@@ -234,9 +234,9 @@ function App() {
                   <button
                     key={label}
                     onClick={() => handleAsk(label)}
-                    className="flex items-center gap-2 px-3.5 py-2 rounded-lg bg-[#162b1f] border border-emerald-700/60 hover:border-emerald-400 text-gray-300 hover:text-white text-sm transition-colors shadow-[0_1px_8px_rgba(0,0,0,0.3)]"
+                    className="flex items-start text-left gap-2 px-3.5 py-2 rounded-lg bg-[#162b1f] border border-emerald-700/60 hover:border-emerald-400 text-gray-300 hover:text-white text-sm transition-colors shadow-[0_1px_8px_rgba(0,0,0,0.3)]"
                   >
-                    <span className={`w-1.5 h-1.5 rounded-full flex-shrink-0 ${type === 'stats' ? 'bg-emerald-400' : 'bg-sky-400'}`} />
+                    <span className={`w-1.5 h-1.5 mt-1.5 rounded-full flex-shrink-0 ${type === 'stats' ? 'bg-emerald-400' : 'bg-sky-400'}`} />
                     {label}
                   </button>
                 ))}
@@ -255,7 +255,7 @@ function App() {
 
         {/* Fixed input bar at bottom — only during conversation */}
         {hasContent && (
-          <div className="shrink-0 w-full px-4 pb-10 flex flex-col items-center">
+          <div className="shrink-0 w-full px-4 pb-[max(1.5rem,env(safe-area-inset-bottom))] sm:pb-10 flex flex-col items-center">
             {(history.length > 0) && !loading && (
               <p className="text-xs text-gray-500 text-center mb-3 tracking-wide uppercase">
                 Ask another question
