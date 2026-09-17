@@ -22,8 +22,17 @@ export default function HistorySidebar({ history, activeIndex, responding, onSel
     .filter(({ conversation }) => conversation.length > 0)
 
   return (
+    <>
+      {/* On mobile the expanded panel floats over the page instead of squeezing it */}
+      {!collapsed && (
+        <div
+          className="fixed inset-0 z-30 bg-black/60 sm:hidden"
+          onClick={() => setCollapsed(true)}
+          aria-hidden="true"
+        />
+      )}
     <aside
-      className={`${collapsed ? 'w-10' : 'w-72'} shrink-0 bg-[#040d07] border-r border-emerald-800 flex flex-col h-full transition-[width] duration-300 overflow-hidden`}
+      className={`${collapsed ? 'w-10' : 'w-72 max-sm:fixed max-sm:inset-y-0 max-sm:left-0 max-sm:z-40'} shrink-0 bg-[#040d07] border-r border-emerald-800 flex flex-col h-full transition-[width] duration-300 overflow-hidden`}
     >
       {collapsed ? (
         <div className="flex flex-col items-center h-full py-4 gap-4">
@@ -89,5 +98,6 @@ export default function HistorySidebar({ history, activeIndex, responding, onSel
         </>
       )}
     </aside>
+    </>
   )
 }
