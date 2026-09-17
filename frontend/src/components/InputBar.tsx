@@ -11,6 +11,11 @@ interface Props {
 // Autofocus only on desktop — on phones it opens the keyboard over the page on load
 const IS_DESKTOP = typeof window !== 'undefined' && window.matchMedia('(min-width: 640px)').matches
 
+const PLACEHOLDERS = {
+  football: { desktop: 'e.g. Who has been clinical up front recently?', mobile: 'e.g. Top scorers?' },
+  fpl: { desktop: 'e.g. Who should I captain this week?', mobile: 'e.g. Best captain?' },
+}
+
 export default function InputBar({ onAsk, onNewConversation, loading, hasContent, mode = 'football' }: Props) {
   const [input, setInput] = useState('')
 
@@ -46,7 +51,7 @@ export default function InputBar({ onAsk, onNewConversation, loading, hasContent
         type="text"
         value={input}
         onChange={(e) => setInput(e.target.value)}
-        placeholder={mode === 'fpl' ? 'e.g. Who should I captain this week?' : 'e.g. Who has been clinical up front recently?'}
+        placeholder={PLACEHOLDERS[mode][IS_DESKTOP ? 'desktop' : 'mobile']}
         autoFocus={IS_DESKTOP}
         disabled={loading}
         className="flex-1 min-w-0 bg-[#162b1f] border border-emerald-700/60 rounded-xl px-4 sm:px-5 py-3.5 text-base sm:text-sm text-white placeholder-gray-500 focus:outline-none focus:border-emerald-400 transition-colors shadow-[0_2px_24px_rgba(0,0,0,0.5)] disabled:opacity-50 disabled:cursor-not-allowed"
